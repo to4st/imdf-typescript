@@ -1,0 +1,26 @@
+{
+  "name": "imdf-typescript",
+  "version": "1.0.0",
+  "description": "Typescript definitions for IMDF https://docs.ogc.org/cs/20-094/index.html",
+  "main": "typename.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/to4st/imdf-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/to4st/imdf-typescript/issues"
+  },
+  "homepage": "https://github.com/to4st/imdf-typescript#readme",
+  "dependencies": {
+    "@types/geojson": "^7946.0.8"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
