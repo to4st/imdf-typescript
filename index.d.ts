@@ -225,14 +225,16 @@ export interface Occupant extends Feature {
     id: OccupantId,
     feature_type: FeatureType.occupant,
     geometry: null,
-    name: Labels,
-    category: OCCUPANT_CATEGORY,
-    anchor_id: AnchorId,
-    hours: Hours | null,
-    phone: Phone | null,
-    website: Website | null,
-    validity: Temporality | null,
-    correlation_id: OccupantId | null
+    properties:  GeoJsonProperties & {
+        name: Labels,
+        category: OCCUPANT_CATEGORY,
+        anchor_id: AnchorId,
+        hours: Hours | null,
+        phone: Phone | null,
+        website: Website | null,
+        validity: Temporality | null,
+        correlation_id: OccupantId | null
+    }
 }
 
 /**
@@ -243,14 +245,16 @@ export interface Opening extends Feature {
     id: OpeningId,
     feature_type: FeatureType.opening,
     geometry: LineString,
-    category: OPENING_CATEGORY,
-    accessibility: ACCESSIBILITY_CATEGORY | null,
-    access_control: ACCESS_CONTROL_CATEGORY | null,
-    door: Door | null,
-    name: Labels | null,
-    alt_name: Labels | null,
-    display_point: DisplayPoint | null,
-    level_id: LevelId
+    properties:  GeoJsonProperties & {
+        category: OPENING_CATEGORY,
+        accessibility: ACCESSIBILITY_CATEGORY | null,
+        access_control: ACCESS_CONTROL_CATEGORY | null,
+        door: Door | null,
+        name: Labels | null,
+        alt_name: Labels | null,
+        display_point: DisplayPoint | null,
+        level_id: LevelId
+    }
 }
 
 /**
@@ -261,12 +265,14 @@ export interface Relationship extends Feature {
     id: RelationshipId,
     feature_type: FeatureType.relationship,
     geometry: Geometry | null,
-    category: RELATIONSHIP_CATEGORY,
-    direction: "directed" | "undirected",
-    origin: FeatureReference | null,
-    intermediary: FeatureReference | null,
-    destination: FeatureReference | null,
-    hours: Hours | null
+    properties:  GeoJsonProperties & {
+        category: RELATIONSHIP_CATEGORY,
+        direction: "directed" | "undirected",
+        origin: FeatureReference | null,
+        intermediary: FeatureReference | null,
+        destination: FeatureReference | null,
+        hours: Hours | null
+    }
 }
 
 /**
@@ -277,16 +283,18 @@ export interface Section extends Feature {
     id: SectionId,
     feature_type: FeatureType.section,
     geometry: Polygon,
-    category: SECTION_CATEGORY,
-    restriction: RESTRICTION_CATEGORY | null,
-    accessibility: ACCESSIBILITY_CATEGORY | null,
-    name: Labels | null,
-    alt_name: Labels | null,
-    display_point: DisplayPoint | null,
-    level_id: LevelId,
-    address_id: AddressId | null,
-    correlation_id: SectionId | null,
-    parents: SectionId | null
+    properties: GeoJsonProperties & {
+        category: SECTION_CATEGORY,
+        restriction: RESTRICTION_CATEGORY | null,
+        accessibility: ACCESSIBILITY_CATEGORY | null,
+        name: Labels | null,
+        alt_name: Labels | null,
+        display_point: DisplayPoint | null,
+        level_id: LevelId,
+        address_id: AddressId | null,
+        correlation_id: SectionId | null,
+        parents: SectionId | null
+    }
 }
 
 /**
