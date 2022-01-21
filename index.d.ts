@@ -1,4 +1,4 @@
-import {Feature, GeoJsonProperties, Geometry, LineString, Point, Polygon} from "geojson"
+import {Feature as GeoJsonFeature, FeatureCollection as GeoJsonFeatureCollection, Geometry, LineString, Point, Polygon} from "geojson"
 
 interface Door {
     type: DOOR_TYPE | null,
@@ -63,6 +63,38 @@ type SectionId = FeatureId
 type UnitId = FeatureId
 type VenueId = FeatureId
 
+/**
+ * Base properties for all IMDF features
+ */
+export type FeatureProperties = GeoJsonProperties;
+
+/**
+ * Provide a better default value for GeoJsonFeature (Feature in geojson).
+ * This makes the type Feature to be used in generic types much easier.
+ */
+export type Feature<P extends FeatureProperties> = GeoJsonFeature<Geometry | null, FeatureProperties>;
+
+export interface NamedFeatureProperties extends Properties {
+    name: Labels | null,
+    alt_name?: Labels | null,
+    display_point?: DisplayPoint | null
+}
+
+export interface LabeledFeatureProperties extends NamedFeatureProperties {
+    level_id: LevelId,
+    display_point: DisplayPoint | null
+}
+
+/**
+ * Features that have a name
+ */
+export interface NamedFeature<Properties extends NamedFeatureProperties = NamedFeatureProperties> extends Feature<Properties> {};
+
+/**
+ * Features that have a name and a label position
+ */
+export interface LabeledFeature<Properties extends LabeledFeatureProperties = LabeledFeatureProperties> extends NamedFeature<Properties> {};
+
 // FEATURE TYPES
 /**
  * Address object
@@ -72,7 +104,7 @@ export interface Address extends Feature {
     id: AddressId,
     feature_type: FeatureType.address,
     geometry: null,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         address: string,
         unit: string | null,
         locality: string,
@@ -88,11 +120,11 @@ export interface Address extends Feature {
  * Amenity object
  * https://docs.ogc.org/cs/20-094/Amenity/index.html
  */
-export interface Amenity extends Feature {
+export interface Amenity extends NamedFeature {
     id: AmenityId,
     feature_type: FeatureType.amenity,
     geometry: Point,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         category: AMENITY_CATEGORY,
         accessibility: ACCESSIBILITY_CATEGORY | null,
         name: Labels | null,
@@ -114,28 +146,30 @@ export interface Anchor extends Feature {
     id: AnchorId,
     feature_type: FeatureType.anchor,
     geometry: Point,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         address_id: AddressId | null,
         unit_id: UnitId
     }
+}
+
+export interface BuildingProperties extends NamedFeatureProperties {
+    category: BUILDING_CATEGORY,
+    restriction: RESTRICTION_CATEGORY,
+    name: Labels | null,
+    alt_name: Labels | null,
+    display_point: DisplayPoint | null,
+    address_id: AddressId | null
 }
 
 /**
  * Building object
  * https://docs.ogc.org/cs/20-094/Building/index.html
  */
-export interface Building extends Feature {
+export interface Building extends NamedFeature<BuildingProperties> {
     id: BuildingId,
     feature_type: FeatureType.building,
     geometry: null,
-    properties: GeoJsonProperties & {
-        category: BUILDING_CATEGORY,
-        restriction: RESTRICTION_CATEGORY,
-        name: Labels | null,
-        alt_name: Labels | null,
-        display_point: DisplayPoint | null,
-        address_id: AddressId | null
-    }
+    properties: BuildingProperties
 }
 
 /**
@@ -145,7 +179,7 @@ export interface Building extends Feature {
 export interface Detail extends Feature {
     id: DetailId,
     feature_type: FeatureType.detail,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         level_id: LevelId
     }
 }
@@ -154,11 +188,11 @@ export interface Detail extends Feature {
  * Fixture object
  * https://docs.ogc.org/cs/20-094/Fixture/index.html
  */
-export interface Fixture extends Feature {
+export interface Fixture extends LabeledFeature {
     id: FixtureId,
     feature_type: FeatureType.fixture,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         category: FIXTURE_CATEGORY,
         name: Labels | null,
         alt_name: Labels | null,
@@ -176,7 +210,7 @@ export interface Footprint {
     id: FootprintId,
     feature_type: FeatureType.footprint,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         category: FOOTPRINT_CATEGORY,
         name: Labels | null,
         building_ids: Array<BuildingId>
@@ -187,34 +221,36 @@ export interface Footprint {
  * Geofence object
  * https://docs.ogc.org/cs/20-094/Geofence/index.html
  */
-export interface Geofence extends Feature{
+export interface Geofence extends Feature {
     id: GeofenceId,
     feature_type: FeatureType.geofence,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         category: GEOFENCE_CATEGORY
     }
+}
+
+export interface LevelProperties extends NamedFeatureProperties {
+    category: LEVEL_CATEGORY,
+    restriction: RESTRICTION_CATEGORY | null,
+    outdoor: boolean,
+    ordinal: number,
+    name: Labels,
+    short_name: Labels,
+    display_point: DisplayPoint | null,
+    address_id: AddressId | null,
+    building_ids: Array<BuildingId> | null
 }
 
 /**
  * Level object
  * https://docs.ogc.org/cs/20-094/Level/index.html
  */
-export interface Level extends Feature {
+export interface Level extends NamedFeature<LevelProperties> {
     id: LevelId,
     feature_type: FeatureType.level,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
-        category: LEVEL_CATEGORY,
-        restriction: RESTRICTION_CATEGORY | null,
-        outdoor: boolean,
-        ordinal: number,
-        name: Labels,
-        short_name: Labels,
-        display_point: DisplayPoint | null,
-        address_id: AddressId | null,
-        building_ids: Array<BuildingId> | null
-    }
+    properties: LevelProperties
 }
 
 /**
@@ -225,7 +261,7 @@ export interface Occupant extends Feature {
     id: OccupantId,
     feature_type: FeatureType.occupant,
     geometry: null,
-    properties:  GeoJsonProperties & {
+    properties: FeatureProperties & {
         name: Labels,
         category: OCCUPANT_CATEGORY,
         anchor_id: AnchorId,
@@ -241,11 +277,11 @@ export interface Occupant extends Feature {
  * Opening object
  * https://docs.ogc.org/cs/20-094/Opening/index.html
  */
-export interface Opening extends Feature {
+export interface Opening extends LabeledFeature {
     id: OpeningId,
     feature_type: FeatureType.opening,
     geometry: LineString,
-    properties:  GeoJsonProperties & {
+    properties:  LabeledFeatureProperties & {
         category: OPENING_CATEGORY,
         accessibility: ACCESSIBILITY_CATEGORY | null,
         access_control: ACCESS_CONTROL_CATEGORY | null,
@@ -265,7 +301,7 @@ export interface Relationship extends Feature {
     id: RelationshipId,
     feature_type: FeatureType.relationship,
     geometry: Geometry | null,
-    properties:  GeoJsonProperties & {
+    properties:  FeatureProperties & {
         category: RELATIONSHIP_CATEGORY,
         direction: "directed" | "undirected",
         origin: FeatureReference | null,
@@ -279,11 +315,11 @@ export interface Relationship extends Feature {
  * Section object
  * https://docs.ogc.org/cs/20-094/Section/index.html
  */
-export interface Section extends Feature {
+export interface Section extends LabeledFeature {
     id: SectionId,
     feature_type: FeatureType.section,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
+    properties: LabeledFeatureProperties & {
         category: SECTION_CATEGORY,
         restriction: RESTRICTION_CATEGORY | null,
         accessibility: ACCESSIBILITY_CATEGORY | null,
@@ -297,34 +333,36 @@ export interface Section extends Feature {
     }
 }
 
+export interface UnitProperties extends LabeledFeatureProperties {
+    category: UNIT_CATEGORY,
+    restriction: RESTRICTION_CATEGORY | null,
+    accessibility: ACCESSIBILITY_CATEGORY | null,
+    name: Labels | null,
+    alt_name: Labels | null,
+    level_id: LevelId,
+    display_point: DisplayPoint | null
+}
+
 /**
  * Unit object
  * https://docs.ogc.org/cs/20-094/Unit/index.html
  */
-export interface Unit extends Feature {
+export interface Unit extends LabeledFeature<UnitProperties> {
     id: UnitId,
     feature_type: FeatureType.unit,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
-        category: UNIT_CATEGORY,
-        restriction: RESTRICTION_CATEGORY | null,
-        accessibility: ACCESSIBILITY_CATEGORY | null,
-        name: Labels | null,
-        alt_name: Labels | null,
-        level_id: LevelId,
-        display_point: DisplayPoint | null
-    }
+    properties: UnitProperties
 }
 
 /**
  * Venue object
  * https://docs.ogc.org/cs/20-094/Venue/index.html
  */
-export interface Venue extends Feature {
+export interface Venue extends LabeledFeature {
     id: VenueId,
     feature_type: FeatureType.venue,
     geometry: Polygon,
-    properties: GeoJsonProperties & {
+    properties: FeatureProperties & {
         category: VENUE_CATEGORY,
         restriction: RESTRICTION_CATEGORY | null,
         name: Labels,
