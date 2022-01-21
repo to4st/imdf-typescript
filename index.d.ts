@@ -1,4 +1,4 @@
-import {Feature as GeoJsonFeature, FeatureCollection as GeoJsonFeatureCollection, Geometry, LineString, Point, Polygon} from "geojson"
+import {Feature as GeoJsonFeature, Geometry, LineString, Point, Polygon} from "geojson"
 
 interface Door {
     type: DOOR_TYPE | null,
