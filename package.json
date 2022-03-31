@@ -1,8 +1,8 @@
 {
   "name": "imdf-typescript",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Typescript definitions for IMDF https://docs.ogc.org/cs/20-094/index.html",
-  "main": "typename.d.ts",
+  "main": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
