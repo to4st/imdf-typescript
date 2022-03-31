@@ -1,6 +1,6 @@
 import {Feature as GeoJsonFeature, Geometry, LineString, Point, Polygon} from "geojson"
 
-interface Door {
+export interface Door {
     type: DOOR_TYPE | null,
     automatic: boolean,
     material: "wood" | "glass" | "metal" | "gate" | null
@@ -11,7 +11,7 @@ interface FeatureReference {
     feature_type: FeatureType
 }
 
-enum FeatureType {
+export enum FeatureType {
     "address"="address",
     "amenity"="amenity",
     "anchor"="anchor",
@@ -30,39 +30,39 @@ enum FeatureType {
     "venue"="venue"
 }
 
-interface Labels {
+export interface Labels {
     [key: string]: string; // ToDo Restrict key to lang shortnames
 }
 
-interface Temporality {
+export interface Temporality {
     start: string,
     end: string,
     modified: string
 }
 
-type Hours = string
-type Phone = string
-type Website = string
-type ISO3166 = string
-type ISO3166_2 = string
+export type Hours = string
+export type Phone = string
+export type Website = string
+export type ISO3166 = string
+export type ISO3166_2 = string
 
 // IDS
-type FeatureId = string
-type AddressId = FeatureId
-type AmenityId = FeatureId
-type AnchorId = FeatureId
-type BuildingId = FeatureId
-type DetailId = FeatureId
-type FixtureId = FeatureId
-type FootprintId = FeatureId
-type GeofenceId = FeatureId
-type KioskId = FeatureId
-type LevelId = FeatureId
-type OccupantId = FeatureId
-type RelationshipId = FeatureId
-type SectionId = FeatureId
-type UnitId = FeatureId
-type VenueId = FeatureId
+export type FeatureId = string
+export type AddressId = FeatureId
+export type AmenityId = FeatureId
+export type AnchorId = FeatureId
+export type BuildingId = FeatureId
+export type DetailId = FeatureId
+export type FixtureId = FeatureId
+export type FootprintId = FeatureId
+export type GeofenceId = FeatureId
+export type KioskId = FeatureId
+export type LevelId = FeatureId
+export type OccupantId = FeatureId
+export type RelationshipId = FeatureId
+export type SectionId = FeatureId
+export type UnitId = FeatureId
+export type VenueId = FeatureId
 
 /**
  * Base properties for all IMDF features
