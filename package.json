@@ -1,6 +1,6 @@
 {
   "name": "imdf-typescript",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Typescript definitions for IMDF https://docs.ogc.org/cs/20-094/index.html",
   "main": "typename.d.ts",
   "scripts": {

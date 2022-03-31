@@ -56,6 +56,7 @@ type DetailId = FeatureId
 type FixtureId = FeatureId
 type FootprintId = FeatureId
 type GeofenceId = FeatureId
+type KioskId = FeatureId
 type LevelId = FeatureId
 type OccupantId = FeatureId
 type RelationshipId = FeatureId
@@ -66,7 +67,10 @@ type VenueId = FeatureId
 /**
  * Base properties for all IMDF features
  */
-export type FeatureProperties = GeoJsonProperties;
+export type FeatureProperties = {
+    id: string,
+    feature_type: string
+};
 
 /**
  * Provide a better default value for GeoJsonFeature (Feature in geojson).
@@ -88,12 +92,12 @@ export interface LabeledFeatureProperties extends NamedFeatureProperties {
 /**
  * Features that have a name
  */
-export interface NamedFeature<Properties extends NamedFeatureProperties = NamedFeatureProperties> extends Feature<Properties> {};
+export interface NamedFeature<Properties extends NamedFeatureProperties = NamedFeatureProperties> extends Feature<Properties> {}
 
 /**
  * Features that have a name and a label position
  */
-export interface LabeledFeature<Properties extends LabeledFeatureProperties = LabeledFeatureProperties> extends NamedFeature<Properties> {};
+export interface LabeledFeature<Properties extends LabeledFeatureProperties = LabeledFeatureProperties> extends NamedFeature<Properties> {}
 
 // FEATURE TYPES
 /**
@@ -228,6 +232,25 @@ export interface Geofence extends Feature {
     properties: FeatureProperties & {
         category: GEOFENCE_CATEGORY
     }
+}
+
+export interface KioskProperties extends NamedFeatureProperties {
+    name: Labels,
+    alt_name: Labels,
+    anchorId: AnchorId | null
+    levelId: LevelId | null
+    display_point: DisplayPoint | null
+}
+
+/**
+ * Kiosk object
+ * https://docs.ogc.org/cs/20-094/kiosk/index.html
+ */
+export interface Level extends NamedFeature<LevelProperties> {
+    id: KioskId,
+    feature_type: FeatureType.kiosk,
+    geometry: Polygon,
+    properties: KioskProperties
 }
 
 export interface LevelProperties extends NamedFeatureProperties {
