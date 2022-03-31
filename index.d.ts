@@ -67,16 +67,15 @@ type VenueId = FeatureId
 /**
  * Base properties for all IMDF features
  */
-export type FeatureProperties = {
-    id: string,
-    feature_type: string
-};
+export type FeatureProperties = {};
 
 /**
  * Provide a better default value for GeoJsonFeature (Feature in geojson).
  * This makes the type Feature to be used in generic types much easier.
  */
-export type Feature<P extends FeatureProperties> = GeoJsonFeature<Geometry | null, FeatureProperties>;
+export interface Feature<P extends FeatureProperties> extends GeoJsonFeature<Geometry | null, FeatureProperties> {
+    feature_type: string
+}
 
 export interface NamedFeatureProperties extends Properties {
     name: Labels | null,
