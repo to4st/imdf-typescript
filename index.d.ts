@@ -246,7 +246,7 @@ export interface KioskProperties extends NamedFeatureProperties {
  * Kiosk object
  * https://docs.ogc.org/cs/20-094/kiosk/index.html
  */
-export interface Level extends NamedFeature<LevelProperties> {
+export interface Kiosk extends NamedFeature<LevelProperties> {
     id: KioskId,
     feature_type: FeatureType.kiosk,
     geometry: Polygon,
