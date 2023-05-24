@@ -1,4 +1,6 @@
-import {Feature as GeoJsonFeature, Geometry, LineString, Point, Polygon} from "geojson"
+import {Feature as GeoJsonFeature, Geometry, LineString, Point, Polygon, MultiPolygon} from "geojson"
+
+export type Polygonal = Polygon | MultiPolygon
 
 export interface Door {
     type: DOOR_TYPE | null,
@@ -194,7 +196,7 @@ export interface Detail extends Feature {
 export interface Fixture extends LabeledFeature {
     id: FixtureId,
     feature_type: FeatureType.fixture,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: FeatureProperties & {
         category: FIXTURE_CATEGORY,
         name: Labels | null,
@@ -212,7 +214,7 @@ export interface Fixture extends LabeledFeature {
 export interface Footprint {
     id: FootprintId,
     feature_type: FeatureType.footprint,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: FeatureProperties & {
         category: FOOTPRINT_CATEGORY,
         name: Labels | null,
@@ -227,7 +229,7 @@ export interface Footprint {
 export interface Geofence extends Feature {
     id: GeofenceId,
     feature_type: FeatureType.geofence,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: FeatureProperties & {
         category: GEOFENCE_CATEGORY
     }
@@ -248,7 +250,7 @@ export interface KioskProperties extends NamedFeatureProperties {
 export interface Kiosk extends NamedFeature<LevelProperties> {
     id: KioskId,
     feature_type: FeatureType.kiosk,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: KioskProperties
 }
 
@@ -271,7 +273,7 @@ export interface LevelProperties extends NamedFeatureProperties {
 export interface Level extends NamedFeature<LevelProperties> {
     id: LevelId,
     feature_type: FeatureType.level,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: LevelProperties
 }
 
@@ -340,7 +342,7 @@ export interface Relationship extends Feature {
 export interface Section extends LabeledFeature {
     id: SectionId,
     feature_type: FeatureType.section,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: LabeledFeatureProperties & {
         category: SECTION_CATEGORY,
         restriction: RESTRICTION_CATEGORY | null,
@@ -372,7 +374,7 @@ export interface UnitProperties extends LabeledFeatureProperties {
 export interface Unit extends LabeledFeature<UnitProperties> {
     id: UnitId,
     feature_type: FeatureType.unit,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: UnitProperties
 }
 
@@ -383,7 +385,7 @@ export interface Unit extends LabeledFeature<UnitProperties> {
 export interface Venue extends LabeledFeature {
     id: VenueId,
     feature_type: FeatureType.venue,
-    geometry: Polygon,
+    geometry: Polygonal,
     properties: FeatureProperties & {
         category: VENUE_CATEGORY,
         restriction: RESTRICTION_CATEGORY | null,
