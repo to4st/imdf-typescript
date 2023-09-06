@@ -1,6 +1,6 @@
 {
   "name": "imdf-typescript",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Typescript definitions for IMDF https://docs.ogc.org/cs/20-094/index.html",
   "main": "index.d.ts",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/to4st/imdf-typescript.git"
   },
   "keywords": [],
-  "author": "Torben Steinhardt <hello@to4st.de>",
+  "author": "Torben Komsthöft <hello@to4st.de>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/to4st/imdf-typescript/issues"

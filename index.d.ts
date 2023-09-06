@@ -79,6 +79,8 @@ export interface Feature<P extends FeatureProperties> extends GeoJsonFeature<Geo
     feature_type: string
 }
 
+interface Properties extends Record<string, any> {}
+
 export interface NamedFeatureProperties extends Properties {
     name: Labels | null,
     alt_name?: Labels | null,
