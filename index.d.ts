@@ -75,7 +75,7 @@ export type FeatureProperties = {};
  * Provide a better default value for GeoJsonFeature (Feature in geojson).
  * This makes the type Feature to be used in generic types much easier.
  */
-export interface Feature<P extends FeatureProperties> extends GeoJsonFeature<Geometry | null, FeatureProperties> {
+export interface Feature<P extends FeatureProperties> extends GeoJsonFeature<Geometry | null, P> {
     feature_type: string
 }
 
