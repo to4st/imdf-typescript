@@ -213,7 +213,7 @@ export interface Fixture extends LabeledFeature {
  * Footprint object
  * https://docs.ogc.org/cs/20-094/Footprint/index.html
  */
-export interface Footprint {
+export interface Footprint extends Feature {
     id: FootprintId,
     feature_type: FeatureType.footprint,
     geometry: Polygonal,
