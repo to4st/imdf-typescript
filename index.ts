@@ -61,6 +61,7 @@ export type GeofenceId = FeatureId
 export type KioskId = FeatureId
 export type LevelId = FeatureId
 export type OccupantId = FeatureId
+export type OpeningId = FeatureId
 export type RelationshipId = FeatureId
 export type SectionId = FeatureId
 export type UnitId = FeatureId
@@ -75,7 +76,7 @@ export type FeatureProperties = {};
  * Provide a better default value for GeoJsonFeature (Feature in geojson).
  * This makes the type Feature to be used in generic types much easier.
  */
-export interface Feature<P extends FeatureProperties> extends GeoJsonFeature<Geometry | null, FeatureProperties> {
+export interface Feature<P extends FeatureProperties = FeatureProperties> extends GeoJsonFeature<Geometry | null, P> {
     feature_type: string
 }
 
@@ -249,7 +250,7 @@ export interface KioskProperties extends NamedFeatureProperties {
  * Kiosk object
  * https://docs.ogc.org/cs/20-094/kiosk/index.html
  */
-export interface Kiosk extends NamedFeature<LevelProperties> {
+export interface Kiosk extends NamedFeature<KioskProperties> {
     id: KioskId,
     feature_type: FeatureType.kiosk,
     geometry: Polygonal,
@@ -384,7 +385,7 @@ export interface Unit extends LabeledFeature<UnitProperties> {
  * Venue object
  * https://docs.ogc.org/cs/20-094/Venue/index.html
  */
-export interface Venue extends LabeledFeature {
+export interface Venue extends NamedFeature {
     id: VenueId,
     feature_type: FeatureType.venue,
     geometry: Polygonal,
@@ -1876,7 +1877,7 @@ export enum RELATIONSHIP_CATEGORY {
     "ramp"="ramp",
     "stairs"="stairs",
     "traversal"="traversal",
-    "traversal.path"="traversal"
+    "traversal.path"="traversal.path"
 }
 
 /**
@@ -1932,7 +1933,7 @@ export enum SECTION_CATEGORY {
     "gatearea.holding"="gatearea.holding",
     immigration="immigration",
     "immigration.schengen"="immigration.schengen",
-    information=information,
+    information='information',
     paidarea="paidarea",
     parkandride="parkandride",
     parking="parking",
@@ -2029,7 +2030,7 @@ export enum UNIT_CATEGORY {
     waitingroom="waitingroom",
     walkway="walkway",
     "walkway.island"="walkway.island",
-    wood=wood
+    wood='wood'
 }
 
 /**
