@@ -1,10 +1,14 @@
 {
   "name": "imdf-typescript",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "description": "Typescript definitions for IMDF https://docs.ogc.org/cs/20-094/index.html",
-  "main": "index.d.ts",
+  "main": "index.js",
+  "source": "index.ts",
+  "types": "index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
