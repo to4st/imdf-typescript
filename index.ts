@@ -4,7 +4,7 @@ export type Polygonal = Polygon | MultiPolygon
 
 export interface Door {
     type: DOOR_TYPE | null,
-    automatic: boolean,
+    automatic: boolean | null,
     material: "wood" | "glass" | "metal" | "gate" | null
 }
 
